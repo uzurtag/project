@@ -36,13 +36,13 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'date_update')->textInput() ?>
     
-<?php var_dump(ArrayHelper::map($tag, 'id', 'name'))?>
+<?php/* var_dump(ArrayHelper::map($tag, 'id', 'name'))*/?>
 
-    <?= $form->field($model, 'tag_id')->widget(Select2::className([
+    <?php /*$form->field($model, 'tag_id')->widget(Select2::className([
             'name' => 'kv-state-210',
             'data' => ArrayHelper::map($tag, 'id', 'name'),
             'options' => ['placeholder' => 'Select a state ...'],
-        ])) ?>
+        ])) */?>
 
     
 

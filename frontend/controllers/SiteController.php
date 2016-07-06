@@ -13,6 +13,11 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 
+
+use common\models\News;
+use common\models\Products;
+
+
 /**
  * Site controller
  */
@@ -130,6 +135,49 @@ class SiteController extends Controller
             ]);
         }
     }
+
+    /**
+     * Displays news page.
+     *
+     * @return mixed
+     */
+    public function actionNews()
+    {
+        $model = new News();
+        $news = $model->find()->orderBy(['id' => SORT_DESC])->all();
+
+        // var_dump($news); die();
+
+        return $this->render('news', ['news' => $news]);
+    }
+
+    public function actionDetailNews($id)
+    {
+        $news = News::find()->where(['id' => $id])->one();
+
+        return $this->render('detailNews', ['news' => $news]);
+    }
+
+    /**
+     * Displays product page.
+     *
+     * @return mixed
+     */
+    public function actionProducts()
+    {
+        $model = new Products();
+        $products = $model->find()->orderBy(['id' => SORT_DESC])->all();
+
+        return $this->render('products', ['products' => $products]);
+    }
+
+    public function actionDetailProducts($id)
+    {
+        $products = Products::find()->where(['id' => $id])->one();
+
+        return $this->render('detailProducts', ['products' => $products]);
+    }
+
 
     /**
      * Displays about page.
