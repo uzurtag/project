@@ -109,3 +109,16 @@ a.desc:after {
 .nav > li > form > button:hover {
     text-decoration: none;
 }
+
+.product {
+    width: 210px;
+    height: 440px;
+    float: left;
+    margin: 10px 5px 0px 0;
+    padding: 0 0 5px 0;
+}
+
+.product>button {
+    float: right;
+    margin-right: 30px;
+}
