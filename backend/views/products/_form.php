@@ -38,11 +38,14 @@ use yii\helpers\ArrayHelper;
     
 <?php/* var_dump(ArrayHelper::map($tag, 'id', 'name'))*/?>
 
-    <?php /*$form->field($model, 'tag_id')->widget(Select2::className([
-            'name' => 'kv-state-210',
-            'data' => ArrayHelper::map($tag, 'id', 'name'),
-            'options' => ['placeholder' => 'Select a state ...'],
-        ])) */?>
+        <?= $form->field($model, 'tag_id')->widget(Select2::classname(), [
+        'name' => 'state_10',
+        'options' => [
+                    'placeholder' => 'Выбрать команду ...',
+                    'multiple' => true
+                ],
+        'data' => ArrayHelper::map($tag, 'id', 'name'), // data as array
+    ]) ?>
 
     
 

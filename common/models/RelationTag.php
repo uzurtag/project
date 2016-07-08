@@ -5,20 +5,20 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "image".
+ * This is the model class for table "relation_tag".
  *
  * @property integer $id
- * @property string $image
+ * @property integer $tag_id
  * @property integer $product_id
  */
-class Image extends \yii\db\ActiveRecord
+class RelationTag extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'image';
+        return 'relation_tag';
     }
 
     /**
@@ -27,9 +27,8 @@ class Image extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['image', 'product_id'], 'required'],
-            [['product_id'], 'integer'],
-            [['image'], 'string', 'max' => 255],
+            [['tag_id', 'product_id'], 'required'],
+            [['tag_id', 'product_id'], 'integer'],
         ];
     }
 
@@ -40,10 +39,8 @@ class Image extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'image' => 'Image',
+            'tag_id' => 'Tag ID',
             'product_id' => 'Product ID',
         ];
     }
-
-    
 }

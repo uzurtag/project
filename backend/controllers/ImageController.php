@@ -3,19 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Products;
-use backend\models\ProductsSearch;
+use common\models\Image;
+use backend\models\ImageSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-use common\models\Tag;
-use common\models\RelationTag;
-
 /**
- * ProductsController implements the CRUD actions for Products model.
+ * ImageController implements the CRUD actions for Image model.
  */
-class ProductsController extends Controller
+class ImageController extends Controller
 {
     /**
      * @inheritdoc
@@ -33,12 +30,12 @@ class ProductsController extends Controller
     }
 
     /**
-     * Lists all Products models.
+     * Lists all Image models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ProductsSearch();
+        $searchModel = new ImageSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -48,7 +45,7 @@ class ProductsController extends Controller
     }
 
     /**
-     * Displays a single Products model.
+     * Displays a single Image model.
      * @param integer $id
      * @return mixed
      */
@@ -60,41 +57,39 @@ class ProductsController extends Controller
     }
 
     /**
-     * Creates a new Products model.
+     * Creates a new Image model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
-        $model = new Products();
+        $model = new Image();
 
-        $tag = Tag::find()->all();
+        $image = $model->find()->where(['product_id' => $id])->all();
 
-        if ($model->load(Yii::$app->request->post())) {
-            // var_dump($model->tag_id); die();
-            $model->save();
-            // var_dump($model->save(), $model->validate(), $model->errors);
+        if ($model->load(Yii::$app->request->post()) /*&& $model->save()*/) {
 
-            foreach ($model->tag_id as $item) {
-                $addTag = new RelationTag();
-                $addTag->tag_id = $item;
-                $addTag->product_id = $model->id;
+            /*$id=$_GET['id']
+            $img->img=путь к имеджу
+            $img->prod_id=id
+            $img->save();
 
-                // var_dump($addTag->save());
-                $addTag->save();
-            }
 
-            return $this->redirect(['view', 'id' => $model->id]);
+            */
+
+
+
+            return $this->redirect(['create', 'id' => $id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'tag' => $tag,
+                'image' => $image,
             ]);
         }
     }
 
     /**
-     * Updates an existing Products model.
+     * Updates an existing Image model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -113,7 +108,7 @@ class ProductsController extends Controller
     }
 
     /**
-     * Deletes an existing Products model.
+     * Deletes an existing Image model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -126,15 +121,15 @@ class ProductsController extends Controller
     }
 
     /**
-     * Finds the Products model based on its primary key value.
+     * Finds the Image model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Products the loaded model
+     * @return Image the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Products::findOne($id)) !== null) {
+        if (($model = Image::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

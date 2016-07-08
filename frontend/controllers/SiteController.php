@@ -16,6 +16,7 @@ use frontend\models\ContactForm;
 
 use common\models\News;
 use common\models\Products;
+use common\models\Tag;
 
 
 /**
@@ -77,6 +78,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        // $q = Tag::find()->where(['id' => 3])->one();
+        // var_dump($q->products); die();
         return $this->render('index');
     }
 

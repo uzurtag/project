@@ -41,4 +41,19 @@ class Tag extends \yii\db\ActiveRecord
             'name' => 'Name',
         ];
     }
+
+
+
+    /*
+    Связь через промежуточную таблицу;
+    */
+    public function getRelationTag()
+    {
+        return $this->hasMany(RelationTag::classname(), ['tag_id' => 'id']);
+    }
+
+    public function getProducts()
+    {
+        return $this->hasMany(Products::classname(), ['id' => 'product_id'])->via('relationTag');
+    }
 }

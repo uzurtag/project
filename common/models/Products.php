@@ -38,8 +38,9 @@ class Products extends \yii\db\ActiveRecord
         return [
             [['title_ru', 'title_en', 'description_ru', 'description_en', 'logo', 'status', 'price', 'count', 'date_create', 'date_update', 'tag_id'], 'required'],
             [['description_ru', 'description_en'], 'string'],
-            [['status', 'price', 'count', 'date_create', 'date_update', 'tag_id'], 'integer'],
+            [['status', 'price', 'count', 'date_create', 'date_update'], 'integer'],
             [['title_ru', 'title_en', 'logo'], 'string', 'max' => 255],
+            [['tag_id'], 'safe'],
         ];
     }
 
