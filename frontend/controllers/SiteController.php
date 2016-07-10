@@ -18,6 +18,7 @@ use common\models\News;
 use common\models\Products;
 use common\models\Tag;
 use common\models\RelationTag;
+use yii\data\Pagination;
 
 
 /**
@@ -152,7 +153,22 @@ class SiteController extends Controller
 
         // var_dump($news); die();
 
-        return $this->render('news', ['news' => $news]);
+
+
+        /*$query = Product::find()->select('id, title_ru, description_ru, logo, price')->orderBy('id DESC')->where(['status'=> 1 ]);
+        $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 9]);
+        $posts = $query->offset($pages->offset)->limit($pages->limit)->all();*/
+
+        $query = News::find()->count();
+        
+        $pages = new Pagination(['totalCount' => $query, 'defaultPageSize' => 3]);
+
+        $models = News::find()->offset($pages->offset)->limit($pages->limit)->all();
+
+        return $this->render('news', ['news' => $news, 
+            'models' => $models, 
+            'pages' => $pages,
+        ]);
     }
 
     public function actionDetailNews($id)
@@ -172,7 +188,11 @@ class SiteController extends Controller
         $model = new Products();
         $products = $model->find()->orderBy(['id' => SORT_DESC])->all();
 
-        return $this->render('products', ['products' => $products]);
+        $tags = Tag::find()->all();
+
+        // var_dump($tags); die();
+
+        return $this->render('products', ['products' => $products, 'tags' => $tags]);
     }
 
     public function actionDetailProducts($id)

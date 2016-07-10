@@ -29,7 +29,8 @@ class Image extends \yii\db\ActiveRecord
         return [
             [['image', 'product_id'], 'required'],
             [['product_id'], 'integer'],
-            [['image'], 'string', 'max' => 255],
+            // [['image'], 'string', 'max' => 255],
+            [['image'], 'file', 'extensions' => 'jpg, png'],
         ];
     }
 

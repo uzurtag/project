@@ -41,6 +41,7 @@ class Products extends \yii\db\ActiveRecord
             [['status', 'price', 'count', 'date_create', 'date_update'], 'integer'],
             [['title_ru', 'title_en', 'logo'], 'string', 'max' => 255],
             [['tag_id'], 'safe'],
+            [['logo'], 'file', 'extensions' => 'jpg, png'],
         ];
     }
 

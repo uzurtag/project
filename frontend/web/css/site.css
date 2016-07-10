@@ -118,6 +118,11 @@ a.desc:after {
     padding: 0 0 5px 0;
 }
 
+.product>img{
+    width: 200px;
+    height: 250px;
+}
+
 .product>button {
     float: right;
     margin-right: 30px;

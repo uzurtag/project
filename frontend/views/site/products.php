@@ -1,19 +1,23 @@
 <!-- test products -->
+<?php foreach ($tags as $item) :?>
+                           <a href="index.php?r=site/detailtag&id=<?=$item->id?>"><?=$item->name?>&nbsp&nbsp</a>   
+<?php endforeach ;?>
 
 <h1>Products</h1>
-
-
-
+    
 <?php foreach ($products as $item): ?>
-	<div class="product">
-		<img src="/<?=$item->logo?>" style="width: 300px; height: 400px;">
-		<?php /*var_dump($item->logo)*/?>
-		<!-- <img src="/frontend/web/images/xiaomi_mi5_1638652733.jpg" style="width: 200px;"> -->
-		<a href="index.php?r=site%2Fdetail-products&id=<?=$item->id?>"><h2> <?=$item->title_ru?> </h2></a>
-		<span><?=$item->price?> $</span>
-		<button type="button" class="btn btn-success">В корзину</button>
+	<div class="col-md-3 col-sm-6 hero-feature">
+		<div class="thumbnail">
+			<img src="/<?=$item->logo?>" alt="">
+			<div class="caption">
+				<h3><?=$item->title_ru?></h3>
+				<p>Price: <?=$item->price?> $</p>
+				<p>
+					<a href="#" class="btn btn-primary">Buy Now!</a> <a href="index.php?r=site%2Fdetail-products&id=<?=$item->id?>" class="btn btn-default">More Info</a>
+				</p>
+			</div>
+		</div>	
 	</div>
 <?php endforeach; ?>
-
 
 

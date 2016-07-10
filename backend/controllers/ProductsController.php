@@ -68,9 +68,8 @@ class ProductsController extends Controller
     public function actionCreate()
     {
         $model = new Products();
-
         $tag = Tag::find()->all();
-
+        
         if ($model->load(Yii::$app->request->post())) {
             // var_dump($model->tag_id); die();
             // var_dump($model->save(), $model->validate(), $model->errors);
@@ -108,8 +107,6 @@ class ProductsController extends Controller
     {
         $model = $this->findModel($id);
         $tag = Tag::find()->all();
-
-        // var_dump($model); die();
 
         if ($model->load(Yii::$app->request->post())) {
 

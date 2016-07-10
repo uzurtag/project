@@ -9,6 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use yii\web\UploadedFile;
+
 /**
  * ImageController implements the CRUD actions for Image model.
  */
@@ -69,40 +71,19 @@ class ImageController extends Controller
 
         if ($model->load(Yii::$app->request->post()) /*&& $model->save()*/) {
 
-            /*$id=$_GET['id']
-            $img->img=путь к имеджу
-            $img->prod_id=id
-            $img->save();
+            $id = $_GET['id'];
 
+            $model->product_id = $id;
+            $model->save();
+            $model->image = UploadedFile::getInstance($model, 'image');
+            
+            if($model->image){
+                $model->image->saveAs(Yii::getAlias('@frontend/web/images/') . md5($model->id) . '.' . $model->image->extension);
+                $model->image = '/frontend/web/images/' . md5($model->id) . '.' . $model->image->extension;
+            }
+            
+            $model->save();
 
-    public function actionCreate()
-    {
-        $id = $_GET['id']; //получение id продукта, отправленного с бэкенд/продакт/индекс
-        $images = Image::find()->where(['product_id' => $id])->all();
-        $model = new Image();
-        //$model->image = "i"; //присваиваем любое значение антрибуту, иначе не сохраняется в бд. а данные знсим в БД перед сохранением файла, чтобы получить id in table img
-
-        if ($model->load(Yii::$app->request->post()) ) {
-                $model->product_id = $id;
-                $model->save();
-                $model->file = UploadedFile::getInstance($model, 'file');
-                if($model->file){
-                    $model->file->saveAs(Yii::getAlias('@frontend/web/images/') . md5($model->id) . '.' . $model->file->extension);
-                    $model->image = '/frontend/web/images/' . md5($model->id) . '.' . $model->file->extension;
-                }
-        $model->save(false); //что-бы повторно не валидировалось, иначе присваивается $model->image = "i"
-
-        return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-                'images' => $images
-            ]);
-        }
-    }
-
-
-        */
             return $this->redirect(['create', 'id' => $id]);
         } else {
             return $this->render('create', [

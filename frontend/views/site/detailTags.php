@@ -1,17 +1,16 @@
-'Смартфоны и телефоны'
-
-
-                
-<div class="row">
-
-    <div class="col-md-4 col-lg-4">
-        <?php foreach ($productTags->products as $item) :?>
-            <a href="index.php?r=site/detail&id=<?=$item->id ?>"><b><h3><center><?=$item->title_ru?>
-            </center></h3></b></a>
-            <em> <?=$item->description_ru ?></em><br>
-            <b>Модель: <span style="color:blue"><?=$item->logo ?></span></b><br>
-            Цена: <?=$item->price ?> грн. <br><br>
-            <hr>
-        <?php endforeach ;?>
+<?php foreach ($productTags->products as $item): ?>
+    <div class="col-md-3 col-sm-6 hero-feature">
+        <div class="thumbnail">
+            <img src="/<?=$item->logo?>" alt="">
+            <div class="caption">
+                <h3><?=$item->title_ru?></h3>
+                <p>Price: <?=$item->price?> $</p>
+                <p>
+                    <a href="#" class="btn btn-primary">Buy Now!</a> <a href="index.php?r=site%2Fdetail-products&id=<?=$item->id?>" class="btn btn-default">More Info</a>
+                </p>
+            </div>
+        </div>  
     </div>
-</div>
+<?php endforeach; ?>
+
+

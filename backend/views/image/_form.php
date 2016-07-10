@@ -12,9 +12,11 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'image')->fileInput() ?>
 
-    <?= $form->field($model, 'product_id')->textInput() ?>
+    <?php/* $form->field($model, 'image')->textInput(['maxlength' => true]) */?>
+
+    <?php/* $form->field($model, 'product_id')->textInput() */?>
 
 
     <div class="form-group">
