@@ -6,7 +6,9 @@
 
 <?php foreach ($products as $item): ?>
 	<div class="product">
-		<img src="/frontend/web/images/xiaomi_mi5_1638652733.jpg" style="width: 200px;">
+		<img src="/<?=$item->logo?>" style="width: 300px; height: 400px;">
+		<?php /*var_dump($item->logo)*/?>
+		<!-- <img src="/frontend/web/images/xiaomi_mi5_1638652733.jpg" style="width: 200px;"> -->
 		<a href="index.php?r=site%2Fdetail-products&id=<?=$item->id?>"><h2> <?=$item->title_ru?> </h2></a>
 		<span><?=$item->price?> $</span>
 		<button type="button" class="btn btn-success">В корзину</button>

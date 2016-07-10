@@ -75,10 +75,34 @@ class ImageController extends Controller
             $img->save();
 
 
-            */
+    public function actionCreate()
+    {
+        $id = $_GET['id']; //получение id продукта, отправленного с бэкенд/продакт/индекс
+        $images = Image::find()->where(['product_id' => $id])->all();
+        $model = new Image();
+        //$model->image = "i"; //присваиваем любое значение антрибуту, иначе не сохраняется в бд. а данные знсим в БД перед сохранением файла, чтобы получить id in table img
+
+        if ($model->load(Yii::$app->request->post()) ) {
+                $model->product_id = $id;
+                $model->save();
+                $model->file = UploadedFile::getInstance($model, 'file');
+                if($model->file){
+                    $model->file->saveAs(Yii::getAlias('@frontend/web/images/') . md5($model->id) . '.' . $model->file->extension);
+                    $model->image = '/frontend/web/images/' . md5($model->id) . '.' . $model->file->extension;
+                }
+        $model->save(false); //что-бы повторно не валидировалось, иначе присваивается $model->image = "i"
+
+        return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                'images' => $images
+            ]);
+        }
+    }
 
 
-
+        */
             return $this->redirect(['create', 'id' => $id]);
         } else {
             return $this->render('create', [

@@ -17,6 +17,7 @@ use frontend\models\ContactForm;
 use common\models\News;
 use common\models\Products;
 use common\models\Tag;
+use common\models\RelationTag;
 
 
 /**
@@ -179,6 +180,15 @@ class SiteController extends Controller
         $products = Products::find()->where(['id' => $id])->one();
 
         return $this->render('detailProducts', ['products' => $products]);
+    }
+
+    public function actionDetailtag($id)
+    {
+        $productTags = Tag::find()->where(['id' => $id])->one();
+
+            return $this->render('detailTags', [
+                'productTags' => $productTags,
+            ]);
     }
 
 

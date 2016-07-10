@@ -24,8 +24,6 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'description_en')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'logo')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'status')->textInput() ?>
 
     <?= $form->field($model, 'price')->textInput() ?>
@@ -35,10 +33,14 @@ use yii\helpers\ArrayHelper;
     <?= $form->field($model, 'date_create')->textInput() ?>
 
     <?= $form->field($model, 'date_update')->textInput() ?>
-    
-<?php/* var_dump(ArrayHelper::map($tag, 'id', 'name'))*/?>
 
-        <?= $form->field($model, 'tag_id')->widget(Select2::classname(), [
+    <?php /*$form->field($model, 'logo')->textInput(['maxlength' => true])*/ ?>
+
+    <?= $form->field($model, 'logo')->fileInput() ?>
+    
+    <?php/* var_dump(ArrayHelper::map($tag, 'id', 'name'))*/?>
+
+    <?= $form->field($model, 'tag_id')->widget(Select2::classname(), [
         'name' => 'state_10',
         'options' => [
                     'placeholder' => 'Выбрать команду ...',

@@ -9,3 +9,11 @@
 <b>Date Create</b> <?=$products->date_create?><br><br><br>
 
 <b>Date Update</b> <?=$products->date_update?><br><br><br>
+
+
+
+<?php foreach ($products->tag as $item) :?>
+
+                           <a href="index.php?r=site/detailtag&id=<?=$item->id?>"><?=$item->name?>&nbsp&nbsp</a>   
+
+<?php endforeach ;?>

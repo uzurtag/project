@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 
 use common\models\Tag;
 use common\models\RelationTag;
+use yii\web\UploadedFile;
 
 /**
  * ProductsController implements the CRUD actions for Products model.
@@ -72,15 +73,19 @@ class ProductsController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             // var_dump($model->tag_id); die();
-            $model->save();
             // var_dump($model->save(), $model->validate(), $model->errors);
+
+            $model->logo = UploadedFile::getInstance($model, 'logo');
+            if ($model->logo){
+                $model->logo->saveAs(Yii::getAlias('@frontend/web/images/') . md5($model->id) . '.' . $model->logo->extension);
+                $model->logo = "frontend/web/images/" . md5($model->id) . '.' . $model->logo->extension;
+            }
+            $model->save();
 
             foreach ($model->tag_id as $item) {
                 $addTag = new RelationTag();
                 $addTag->tag_id = $item;
                 $addTag->product_id = $model->id;
-
-                // var_dump($addTag->save());
                 $addTag->save();
             }
 
@@ -102,12 +107,34 @@ class ProductsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $tag = Tag::find()->all();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        // var_dump($model); die();
+
+        if ($model->load(Yii::$app->request->post())) {
+
+            // var_dump($model->tag(), $model->validate(), $model->errors);
+
+            $model->logo = UploadedFile::getInstance($model, 'logo');
+            if ($model->logo){
+                $model->logo->saveAs(Yii::getAlias('@frontend/web/images/') . md5($model->id) . '.' . $model->logo->extension);
+                $model->logo = "frontend/web/images/" . md5($model->id) . '.' . $model->logo->extension;
+            }
+
+            $model->save();
+
+            foreach ($model->tag_id as $item) {
+                $addTag = new RelationTag();
+                $addTag->tag_id = $item;
+                $addTag->product_id = $model->id;
+                $addTag->save();
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'tag' => $tag,
             ]);
         }
     }
