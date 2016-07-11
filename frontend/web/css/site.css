@@ -127,3 +127,12 @@ a.desc:after {
     float: right;
     margin-right: 30px;
 }
+
+.badge>a{
+    color: white;
+}
+
+.tags{
+    float: left;
+    margin: 20px 0 0 30px;
+}

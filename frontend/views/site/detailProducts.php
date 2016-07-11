@@ -1,19 +1,34 @@
-<b>Name product</b> <?=$products->title_ru?><br><br><br>
+<div class="media">
+  <div class="media-left media-top">
+    <a href="#">
+      <img class="media-object" src="/<?=$products->logo?>" alt="...">
+    </a>
+  </div>
+  <div class="media-body">
+    <h4 class="media-heading"><?=$products->title_ru?></h4>
+    <p><?=$products->description_ru?></p>
+    <p>Price: <?=$products->price?> </p>
+  </div>
+</div>
 
-<b>Logo</b> <?=$products->logo?><br><br><br>
-
-<b>Price</b> <?=$products->price?>   $<br><br><br>
-
-<b>Description</b><br> <?=$products->description_ru?><br>
-
-<b>Date Create</b> <?=$products->date_create?><br><br><br>
-
-<b>Date Update</b> <?=$products->date_update?><br><br><br>
+<div class="tags">
+	<?php foreach ($products->tag as $item) :?>
+		<span class="badge">
+	    	<a href="index.php?r=site/detailtag&id=<?=$item->id?>"><?=$item->name?></a>   
+		</span>
+	<?php endforeach ;?>
+</div>
 
 
 
-<?php foreach ($products->tag as $item) :?>
 
-                           <a href="index.php?r=site/detailtag&id=<?=$item->id?>"><?=$item->name?>&nbsp&nbsp</a>   
-
-<?php endforeach ;?>
+<div class="row"> 
+	
+  <div class="col-md-3 col-sm-4 col-xs-6">
+  </div>
+  <div class="col-md-3 col-sm-4 col-xs-6">
+  </div>
+  <div class="col-md-3 col-sm-4 col-xs-6">
+  </div>
+  ...
+</div>
