@@ -1,5 +1,9 @@
 <h1>News</h1>
 
+<?php
+	use yii\widgets\LinkPager;
+?>
+
 <?php foreach ($models as $item): ?>
 	<div class="col-sm-4 col-lg-4 col-md-4">
 		<div class="thumbnail">
@@ -25,7 +29,6 @@
 <?php endforeach; ?>
 
 <div class="center-block">
-    
-<?= \yii\widgets\LinkPager::widget(['pagination' => $pages]) ?>
-  </div>
+    <?= LinkPager::widget(['pagination' => $pages]) ?>
+</div>
 

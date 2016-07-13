@@ -32,7 +32,7 @@ class Comment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'comment', 'date', 'status', 'parrent_id', 'product_id', 'user_id'], 'required'],
+            [['comment'], 'required'],
             [['comment'], 'string'],
             [['date', 'status', 'parrent_id', 'product_id', 'user_id'], 'integer'],
             [['title'], 'string', 'max' => 255],
@@ -55,4 +55,10 @@ class Comment extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
         ];
     }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
 }

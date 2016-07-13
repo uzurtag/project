@@ -18,6 +18,8 @@ use common\models\News;
 use common\models\Products;
 use common\models\Tag;
 use common\models\RelationTag;
+use common\models\Comment;
+use common\models\Image;
 use yii\data\Pagination;
 
 
@@ -149,21 +151,15 @@ class SiteController extends Controller
     public function actionNews()
     {
         $model = new News();
-        $news = $model->find()->orderBy(['id' => SORT_DESC])->all();
+        // $news = $model->find()->orderBy(['id' => SORT_DESC])->all();
 
         // var_dump($news); die();
 
-
-
-        /*$query = Product::find()->select('id, title_ru, description_ru, logo, price')->orderBy('id DESC')->where(['status'=> 1 ]);
-        $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 9]);
-        $posts = $query->offset($pages->offset)->limit($pages->limit)->all();*/
-
-        $query = News::find()->count();
+        $query = $model->find()->count();
         
         $pages = new Pagination(['totalCount' => $query, 'defaultPageSize' => 3]);
 
-        $models = News::find()->offset($pages->offset)->limit($pages->limit)->all();
+        $models = $model->find()->offset($pages->offset)->limit($pages->limit)->orderBy(['id' => SORT_DESC])->all();
 
         return $this->render('news', ['news' => $news, 
             'models' => $models, 
@@ -199,7 +195,45 @@ class SiteController extends Controller
     {
         $products = Products::find()->where(['id' => $id])->one();
 
-        return $this->render('detailProducts', ['products' => $products]);
+        $comment = new Comment();
+
+        $images = Image::find()->where(['product_id' => $id])->all();
+
+        if ($comment->load(Yii::$app->request->post())) {
+            $comment->product_id = $id;
+            if (!Yii::$app->user->isGuest) {
+                $comment->user_id = Yii::$app->user->id;
+            }
+        }
+
+        $comment->save();
+
+        // var_dump($comment->save(), $comment->validate(), $comment->errors); die();
+
+        $viewComments = $comment->find()
+                    ->select('`comment`.* , `user`.`username`')
+                    ->leftJoin('user' , '`user`.`id` = `comment`.`user_id`')
+                    ->where(['product_id' => $id])
+                    ->asArray()
+                    ->all();
+        // $viewComments = $comment->find()->getComment();
+        // var_dump($viewComments); die();
+
+                    // var_dump($images); die();
+
+
+
+
+
+
+
+
+        return $this->render('detailProducts', [
+            'products' => $products,
+            'images' => $images,
+            'comment' => $comment,
+            'viewComments' => $viewComments
+        ]);
     }
 
     public function actionDetailtag($id)

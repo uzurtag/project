@@ -69,6 +69,7 @@ AppAsset::register($this);
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>
+    
 </div>
 
 <footer class="footer">
@@ -80,6 +81,13 @@ AppAsset::register($this);
 </footer>
 
 <?php $this->endBody() ?>
+
+<script type="text/javascript"> 
+    $(document).ready(function() { 
+      $("a.fancyimage").fancybox(); 
+    }); 
+</script>
+
 </body>
 </html>
 <?php $this->endPage() ?>
