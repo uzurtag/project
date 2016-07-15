@@ -91,12 +91,47 @@ use yii\widgets\ActiveForm;
 
 
 <?php foreach ($viewComments as $comment) :?>
+
   <div class="media">
     <div class="media-body">
-        <h4 class="media-heading"><?=$comment['username']?></h4>
-        <p><?=$comment['comment']?></p>
-        <p><?=$comment['date']?></p>
+        <h4 class="media-heading"><?=$comment->user->username?></h4>
+        <p><?=$comment->comment?></p>
+        <p><?=$comment->date?></p>
+        <div class="">
+          <?php $form = ActiveForm::begin(); ?>
+
+            <?= $form->field($comment, 'comment')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($comment, 'parrent_id')->textInput(['value' => $comment->id]) ?>
+
+            <div class="form-group">
+                <?= Html::submitButton($comment->isNewRecord ? 'Create' : 'Update', ['class' => $comment->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            </div>
+
+            <?php ActiveForm::end(); ?>
+        </div>
         <a href="#">Ответить</a>
     </div>
+    <?php foreach ($comment->childComment as $childComment) :?> 
+      <div class="media-body child">
+        <h4 class="media-heading"><?=$childComment->user->username?></h4>
+        <p><?=$childComment->comment?></p>
+        <p><?=$childComment->date?></p>
+        <div class="">
+  <?php $form = ActiveForm::begin(); ?>
+
+    <?= $form->field($comment, 'comment')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($comment, 'parrent_id')->textInput(['value' => $childComment->id]) ?>
+
+    <div class="form-group">
+        <?= Html::submitButton($comment->isNewRecord ? 'Create' : 'Update', ['class' => $comment->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
+</div>
+        <a href="#">Ответить</a>
+    </div>
+    <?php endforeach ;?>
+    
   </div>
+
 <?php endforeach ;?>

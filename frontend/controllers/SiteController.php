@@ -208,32 +208,41 @@ class SiteController extends Controller
 
         $comment->save();
 
+        unset($comment->comment);
+
         // var_dump($comment->save(), $comment->validate(), $comment->errors); die();
 
         $viewComments = $comment->find()
-                    ->select('`comment`.* , `user`.`username`')
-                    ->leftJoin('user' , '`user`.`id` = `comment`.`user_id`')
-                    ->where(['product_id' => $id])
-                    ->asArray()
+                    ->where(['product_id' => $id, 'parrent_id' => 0])
                     ->all();
-        // $viewComments = $comment->find()->getComment();
-        // var_dump($viewComments); die();
 
-                    // var_dump($images); die();
-
-
-
-
-
-
-
+        // $query = ("SELECT * FROM `comment` WHERE 'product_id' = {$id} AND 'parrent_id' = 0")
+        
+        // $viewComments = $comment->find()->getUser->all();
 
         return $this->render('detailProducts', [
             'products' => $products,
             'images' => $images,
             'comment' => $comment,
-            'viewComments' => $viewComments
+            'viewComments' => $viewComments,
+
         ]);
+    }
+
+    public function actionAddProduct($id) 
+    {
+        $session = Yii::$app->session;
+
+        $session->open();
+
+        if($session->has('add')){
+            $session->set('add', [$id]);
+        } else {
+            $session->set('add', [$id]);
+        }
+        var_dump($session->get('add')); die();
+        return $this->redirect('index.php?r=site%2Fproducts');
+
     }
 
     public function actionDetailtag($id)

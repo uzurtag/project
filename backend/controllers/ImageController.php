@@ -75,11 +75,12 @@ class ImageController extends Controller
 
             $model->product_id = $id;
             $model->save();
+            $time = time();
             $model->image = UploadedFile::getInstance($model, 'image');
             
             if($model->image){
-                $model->image->saveAs(Yii::getAlias('@frontend/web/images/') . md5($model->id) . '.' . $model->image->extension);
-                $model->image = '/frontend/web/images/' . md5($model->id) . '.' . $model->image->extension;
+                $model->image->saveAs(Yii::getAlias('@frontend/web/images/') . md5($time) . '.' . $model->image->extension);
+                $model->image = '/frontend/web/images/' . md5($time) . '.' . $model->image->extension;
             }
             
             $model->save();
